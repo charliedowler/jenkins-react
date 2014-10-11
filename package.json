@@ -1,0 +1,36 @@
+{
+  "name": "jenkins-react",
+  "version": "0.1.0",
+  "description": "Nicer UI for jenkins",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "gitrepourl"
+  },
+  "keywords": [
+    "jenkins",
+    "react"
+  ],
+  "author": "charliedowler",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^0.11.2",
+    "request": "^2.45.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.8",
+    "gulp-react": "^1.0.2",
+    "gulp-watch": "~1.1.0",
+    "gulp-insert": "^0.4.0",
+    "gulp-changed": "^1.0.0",
+    "run-sequence": "^1.0.1",
+    "gulp-livereload": "^2.1.1",
+    "gulp-browserify": "^0.5.0",
+    "gulp-concat-css": "^1.0.0",
+    "gulp-minify-css": "^0.3.10",
+    "react-dom-pragma": "^1.0.0"
+  }
+}
