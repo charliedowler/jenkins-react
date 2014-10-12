@@ -1,3 +1,31 @@
 .ui.inverted.menu {
     border-radius: 0px !important;
 }
+
+ul.dropdown {
+    width: 246px;
+    z-index: 9999 !important;
+    position: absolute;
+    background-color: #fff;
+    color: #000;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    border-radius: 0 0 .325em .325em;
+    box-shadow: 0 0 1px 1px rgba(0,0,0,.1);
+    font-size: .875rem;
+    margin-top: 3px;
+}
+ul.dropdown.hidden {
+    display: none;
+}
+
+ul.dropdown li {
+    border-top: 1px solid rgba(0,0,0,.05);
+    padding: 15px;
+}
+
+ul.dropdown li:hover {
+    background-color: rgba(0, 0, 0, .02);
+    cursor: pointer;
+}
