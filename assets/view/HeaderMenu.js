@@ -27,7 +27,7 @@ module.exports = React.createClass({
       delete localStorage.user;
       delete localStorage.pass;
     }
-    window.location.reload();
+    window.location = '/logout';
   }
 });
 

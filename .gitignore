@@ -2,3 +2,5 @@
 build/
 node_modules/
 tmp/
+server/public/javascripts/
+server/public/stylesheets/

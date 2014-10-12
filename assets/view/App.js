@@ -2,6 +2,7 @@ var React = require('react');
 var LoginForm = require('./LoginForm');
 var ConfigForm = require('./ConfigForm');
 var HeaderMenu = require('./HeaderMenu');
+var JobTable = require('./JobTable');
 
 module.exports = React.createClass({
   getInitialState: function () {
@@ -24,6 +25,11 @@ module.exports = React.createClass({
 
     if (this.state.root && !this.state.user && !this.state.pass) {
       component = <LoginForm root={this.state.root} onLoggedIn={this.handleLoggedIn} />;
+    }
+    else if (this.state.root && this.state.user && this.state.pass) {
+      component = <div>
+        <JobTable root={this.state.root} />
+      </div>;
     }
 
     return <div id="app">

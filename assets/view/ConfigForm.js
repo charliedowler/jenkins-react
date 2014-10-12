@@ -30,7 +30,7 @@ module.exports = React.createClass({
   },
   validate: function () {
     var matcher = /^\w+:\/\/([^\s\.]+\.\S{2}|localhost[\:?\d]*)\S*$/;
-    return matcher.test(this.refs['root'].getDOMNode().value);
+    return true || matcher.test(this.refs['root'].getDOMNode().value);
   },
   componentDidUpdate: function () {
     if (this.props.onChange && this.state.root) this.props.onChange({ root: this.state.root });

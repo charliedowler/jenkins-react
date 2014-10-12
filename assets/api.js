@@ -1,26 +1,42 @@
 var request = require('request');
 module.exports = function(root) {
-  this.jar = request.jar();
   return {
     'isRegistrationEnabled': function(cb) {
       request.get({
-        uri: root + '/login?from=%2F',
-        jar: this.jar
+        uri: root + '/login?from=%2F'
       }, function(err, response, body) {
         cb(err, /register/.test(body));
       });
     }.bind(this),
     login: function(username, password, cb) {
-      var uri = root + 'api/json';
+      var uri = 'http://localhost:3000/login';
       request.post({
         uri: uri,
-        jar: this.jar,
-        auth: {
-          user: username,
-          pass: password
+        form: {
+          root: root,
+          username: username,
+          password: password
         }
       }, function(err, response, body) {
         cb(err, response);
+      });
+    },
+    'getJobs': function(cb) {
+      var uri = 'http://localhost:3000/all_jobs';
+      request(uri, function(err, response, body) {
+        cb(err, body);
+      });
+    },
+    'jobInfo': function(job, cb) {
+      var uri = 'http://localhost:3000/job_info?job=' + job;
+      request(uri, function(err, response, body) {
+        cb(err, body);
+      });
+    },
+    'buildInfo': function(job, buildNumber, cb) {
+      var uri = 'http://localhost:3000/build_info?job=' + job + '&build_number=' + buildNumber;
+      request(uri, function(err, response, body) {
+        cb(err, body);
       });
     }
   };
