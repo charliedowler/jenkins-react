@@ -4,7 +4,7 @@
   "description": "Nicer UI for jenkins",
   "main": "gulpfile.js",
   "scripts": {
-    "test": "test"
+    "postinstall": "cd server;npm install"
   },
   "repository": {
     "type": "git",
