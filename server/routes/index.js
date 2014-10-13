@@ -33,9 +33,32 @@ router.post('/login', function (req, res) {
   });
 });
 
-router.get('/all_jobs', function(req, res) {
+router.get('/queue', function (req, res) {
   var user = getData(req);
+  if (!user) {
+    res.send(401);
+    return false;
+  }
   var jenkins = jenkinsapi.init('http://' + user.name + ':' + user.pass + '@' + user.root);
+  jenkins.queue(function (err, data) {
+    if (err) {
+      res.send(err, 500);
+    }
+    if (data === true) res.send(401);
+    else {
+      res.send(data, 200);
+    }
+  });
+});
+
+router.get('/all_jobs', function (req, res) {
+  var user = getData(req);
+  if (!user) {
+    res.send(401);
+    return false;
+  }
+  var jenkins = jenkinsapi.init('http://' + user.name + ':' + user.pass + '@' + user.root);
+
   jenkins.all_jobs(function (err, data) {
     if (err) {
       res.send(err, 500);
@@ -47,8 +70,12 @@ router.get('/all_jobs', function(req, res) {
   });
 });
 
-router.get('/job_info', function(req, res) {
+router.get('/job_info', function (req, res) {
   var user = getData(req);
+  if (!user) {
+    res.send(401);
+    return false;
+  }
   var jenkins = jenkinsapi.init('http://' + user.name + ':' + user.pass + '@' + user.root);
   jenkins.job_info(req.param('job'), function (err, data) {
     if (err) {
@@ -61,8 +88,12 @@ router.get('/job_info', function(req, res) {
   });
 });
 
-router.get('/build_info', function(req, res) {
+router.get('/build_info', function (req, res) {
   var user = getData(req);
+  if (!user) {
+    res.send(401);
+    return false;
+  }
   var jenkins = jenkinsapi.init('http://' + user.name + ':' + user.pass + '@' + user.root);
   jenkins.build_info(req.param('job'), req.param('build_number'), function (err, data) {
     if (err) {
@@ -76,6 +107,7 @@ router.get('/build_info', function(req, res) {
 });
 
 function getData(req) {
+  if (!req.session.user) return false;
   return {
     name: req.session.user.name,
     pass: req.session.user.pass,

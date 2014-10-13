@@ -8,3 +8,8 @@ body {
 #app {
     font-family: "Open Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 }
+
+/* Override semantic-ui grid, margin causes overflow */
+#app #app-grid {
+    margin: 0;
+}

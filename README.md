@@ -1,6 +1,8 @@
-# jenkins-react
+# jenkins-react (WIP)
 
 > A nicer jenkins UI with semantic-ui + React.js
+
+![Screenshot of Jenkins React](screenshot.png)
 
 ## Installation
 ```sh

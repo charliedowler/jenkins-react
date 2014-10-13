@@ -34,10 +34,10 @@ module.exports = React.createClass({
 
     var jobs = this.state.jobs.map(function (job) {
       // TODO: This condition will probably fail if it hasn't been built yet
-      var lastBuild = job.get('lastBuild');
-      var lastFailedBuild = job.get('lastFailedBuild');
-      var lastSuccessfulBuild = job.get('lastSuccessfulBuild');
-      if (!job.get('healthReport') || (!lastSuccessfulBuild.timestamp) || !lastFailedBuild.timestamp) {
+      var lastBuild = job.get('lastBuild') || {};
+      var lastFailedBuild = job.get('lastFailedBuild') || {};
+      var lastSuccessfulBuild = job.get('lastSuccessfulBuild') || {};
+      if (!job.get('healthReport')) {
         return <tr>
           <td>Loading...</td>
           <td></td>
@@ -48,31 +48,55 @@ module.exports = React.createClass({
         </tr>;
       }
       (job.get('lastBuild').result == 'SUCCESS') ? noPassing++ : noFailing++;
-      var isPassing = job.get('color') == 'blue';
-      var daysSinceSuccessfulBuild = moment(new Date(lastSuccessfulBuild.timestamp));
-      daysSinceSuccessfulBuild = moment().diff(daysSinceSuccessfulBuild, 'days');
-      var daysSinceFailedBuild = moment(new Date(lastFailedBuild.timestamp));
-      daysSinceFailedBuild = moment().diff(daysSinceFailedBuild, 'days');
+
+      var buildStatus;
+
+      switch (job.get('color')) {
+        case 'blue':
+          buildStatus = <td className="positive">
+            <i className="icon checkmark"></i>
+          Passing</td>;
+          break;
+        case 'blue_anime':
+          buildStatus = <td className="neutral">
+            <i className="refresh icon"></i>
+          Building</td>;
+          break;
+        case 'red':
+          buildStatus = <td className="negative">
+            <i className="icon close"></i>
+          Failing</td>;
+          break;
+        default:
+
+          break;
+      }
+
+      var daysSinceSuccessfulBuild = lastSuccessfulBuild.timestamp ?
+        moment(new Date(lastSuccessfulBuild.timestamp)) : 'N/A';
+      daysSinceSuccessfulBuild = daysSinceSuccessfulBuild != 'N/A' ? moment().diff(daysSinceSuccessfulBuild, 'days') + ' days ago' : daysSinceSuccessfulBuild;
+
+      var daysSinceFailedBuild = lastFailedBuild.timestamp ? moment(new Date(lastFailedBuild.timestamp)) : 'N/A';
+      daysSinceFailedBuild = daysSinceFailedBuild != 'N/A' ? moment().diff(daysSinceFailedBuild, 'days') + '  days ago' : daysSinceFailedBuild;
+
+      var lastDuration = lastBuild.duration ? moment().millisecond(lastBuild.duration).format('ss') + ' seconds' : 'N/A';
+
       var healthReport = job.get('healthReport')[0];
       // TODO: Show tooltip on healthReport icon => healthReport.description
       // TODO: lastBuild.duration seems to be be different every time, wtf...
       return <tr>
-        {isPassing ? <td className="positive">
-          <i className="icon checkmark"></i>
-        Passing</td> : <td className="negative">
-          <i className="icon close"></i>
-        Failing</td> }
+        {buildStatus}
         <td>
           <img src={"/images/" + healthReport.iconUrl}/>
         </td>
         <td>{job.get('name')}</td>
-        <td>{daysSinceSuccessfulBuild} days ago</td>
-        <td>{daysSinceFailedBuild} days ago</td>
-        <td>{moment().millisecond(lastBuild.duration).format('ss')} seconds</td>
+        <td>{daysSinceSuccessfulBuild}</td>
+        <td>{daysSinceFailedBuild}</td>
+        <td>{lastDuration}</td>
       </tr>;
     }.bind(this));
 
-    return <table className="ui five column table segment">
+    return <table id="job-table" className="ui five column table segment">
       <thead>
         <tr>
           <th>Status</th>

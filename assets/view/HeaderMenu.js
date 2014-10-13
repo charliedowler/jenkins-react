@@ -32,12 +32,9 @@ module.exports = React.createClass({
       return <li>{result.get('name')}</li>;
     });
     return <div className="ui inverted menu">
-      <a className="active item">
+      <a className="item" href="/">
         <i className="home icon"></i>
       Home </a>
-      <a className="item">
-        <i className="mail icon"></i>
-      Messages </a>
       <div className="right menu">
         <div className="item">
           <div className="ui icon input">

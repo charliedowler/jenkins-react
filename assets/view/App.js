@@ -3,6 +3,7 @@ var LoginForm = require('./LoginForm');
 var ConfigForm = require('./ConfigForm');
 var HeaderMenu = require('./HeaderMenu');
 var JobTable = require('./JobTable');
+var BuildQueue = require('./BuildQueue');
 
 module.exports = React.createClass({
   getInitialState: function () {
@@ -27,8 +28,13 @@ module.exports = React.createClass({
       component = <LoginForm root={this.state.root} onLoggedIn={this.handleLoggedIn} />;
     }
     else if (this.state.root && this.state.user && this.state.pass) {
-      component = <div>
-        <JobTable root={this.state.root} />
+      component = <div className="ui grid" id="app-grid">
+        <div className="three wide column">
+          <BuildQueue root={this.state.root} />
+        </div>
+        <div className="thirteen wide column">
+          <JobTable root={this.state.root} />
+        </div>
       </div>;
     }
 

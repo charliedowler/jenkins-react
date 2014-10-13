@@ -38,6 +38,12 @@ module.exports = function(root) {
       request(uri, function(err, response, body) {
         cb(err, body);
       });
+    },
+    'getJobsInQueue': function(cb) {
+      var uri = 'http://localhost:3000/queue';
+      request(uri, function(err, response, body) {
+        cb(err, body);
+      });
     }
   };
 };

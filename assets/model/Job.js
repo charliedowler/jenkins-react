@@ -14,16 +14,19 @@ module.exports = Backbone.Model.extend({
     this.on('change:lastBuild', _.once(this.getLastBuild), this);
   },
   getLastBuild: function() {
+    if (!this.get('lastBuild')) return false;
     api(this.root)['buildInfo'](this.get('name'), this.get('lastBuild').number, function(err, info) {
       this.set({lastBuild: JSON.parse(info)});
     }.bind(this));
   },
   getLastSuccessfulBuild: function() {
+    if (!this.get('lastSuccessfulBuild')) return false;
     api(this.root)['buildInfo'](this.get('name'), this.get('lastSuccessfulBuild').number, function(err, info) {
       this.set({lastSuccessfulBuild: JSON.parse(info)});
     }.bind(this));
   },
   getLastFailedBuild: function() {
+    if (!this.get('lastFailedBuild')) return false;
     api(this.root)['buildInfo'](this.get('name'), this.get('lastFailedBuild').number, function(err, info) {
       this.set({lastFailedBuild: JSON.parse(info)});
     }.bind(this));
