@@ -1,9 +1,16 @@
 var _ = require('underscore');
 var React = require('react/addons');
 var Jobs = require('../collection/Jobs');
+var RouterMixin = require('../mixin/RouterMixin');
 
 module.exports = React.createClass({
-  mixins: [React.addons.LinkedStateMixin],
+  mixins: [RouterMixin],
+  routes: {
+    'job/:name': 'inspectJob'
+  },
+  inspectJob: function(name) {
+    // TODO: Show deeper job info
+  },
   getInitialState: function() {
     return {
       query: null,
@@ -27,10 +34,13 @@ module.exports = React.createClass({
       }
     });
   },
+  selectJob: function(event) {
+    this.navigate('job/' + event.target.getAttribute('data-id'), {trigger: true});
+  },
   render: function () {
     var results = this.state.results.map(function(result) {
-      return <li>{result.get('name')}</li>;
-    });
+      return <li onClick={this.selectJob} data-id={result.get('name')}>{result.get('name')}</li>;
+    }.bind(this));
     return <div className="ui inverted menu">
       <a className="item" href="/">
         <i className="home icon"></i>
