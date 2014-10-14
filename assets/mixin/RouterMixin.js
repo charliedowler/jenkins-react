@@ -12,9 +12,6 @@ module.exports = {
     var router = new Router;
     this.setState({ router: router});
     this.navigate = router.navigate;
-    Backbone.history.start({ pushState: true });
-  },
-  componentDidUpdate: function() {
-
+    Backbone.history.start();
   }
 };
