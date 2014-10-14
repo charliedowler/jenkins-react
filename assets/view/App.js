@@ -1,11 +1,19 @@
 var React = require('react');
+var JobTable = require('./JobTable');
 var LoginForm = require('./LoginForm');
 var ConfigForm = require('./ConfigForm');
 var HeaderMenu = require('./HeaderMenu');
-var JobTable = require('./JobTable');
 var BuildQueue = require('./BuildQueue');
+var RouterMixin = require('../mixin/RouterMixin');
 
 module.exports = React.createClass({
+  mixins: [RouterMixin],
+  routes: {
+    'job/:name': 'inspectJob'
+  },
+  inspectJob: function(name) {
+    // TODO: Show deeper job info
+  },
   getInitialState: function () {
     return {
       root: null,

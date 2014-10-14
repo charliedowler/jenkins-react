@@ -5,12 +5,6 @@ var RouterMixin = require('../mixin/RouterMixin');
 
 module.exports = React.createClass({
   mixins: [RouterMixin],
-  routes: {
-    'job/:name': 'inspectJob'
-  },
-  inspectJob: function(name) {
-    // TODO: Show deeper job info
-  },
   getInitialState: function() {
     return {
       query: null,
