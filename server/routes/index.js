@@ -106,6 +106,24 @@ router.get('/build_info', function (req, res) {
   });
 });
 
+router.get('/last_build_report', function (req, res) {
+  var user = getData(req);
+  if (!user) {
+    res.send(401);
+    return false;
+  }
+  var jenkins = jenkinsapi.init('http://' + user.name + ':' + user.pass + '@' + user.root);
+  jenkins.last_build_report(req.param('job'), function (err, data) {
+    if (err) {
+      res.send(err, 500);
+    }
+    if (data === true) res.send(401);
+    else {
+      res.send(data, 200);
+    }
+  });
+});
+
 function getData(req) {
   if (!req.session.user) return false;
   return {

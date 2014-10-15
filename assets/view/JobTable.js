@@ -1,11 +1,13 @@
 var React = require('react');
 var _ = require('underscore');
-var APIMixin = require('../mixin/APIMixin');
-var Jobs = require('../collection/Jobs');
 var moment = require('moment');
+var Jobs = require('../collection/Jobs');
+var APIMixin = require('../mixin/APIMixin');
+var StateMixin = require('../mixin/StateMixin');
 
 module.exports = React.createClass({
-  mixins: [APIMixin],
+  mixins: [APIMixin, StateMixin],
+  debounce: 1000,
   getInitialState: function () {
     return {
       jobs: [],

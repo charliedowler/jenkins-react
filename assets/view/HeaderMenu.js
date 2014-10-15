@@ -2,9 +2,11 @@ var _ = require('underscore');
 var React = require('react/addons');
 var Jobs = require('../collection/Jobs');
 var RouterMixin = require('../mixin/RouterMixin');
+var StateMixin = require('../mixin/StateMixin');
 
 module.exports = React.createClass({
-  mixins: [RouterMixin],
+  mixins: [RouterMixin, StateMixin],
+  debounce: 1000,
   getInitialState: function() {
     return {
       query: null,
@@ -22,14 +24,14 @@ module.exports = React.createClass({
     });
     jobs.fetch({
       error: function (models, response) {
-        self.setState({ error: {
-          problem: response.statusCode
-        }})
+        self.setState({ problem: response.statusCode })
       }
     });
   },
   selectJob: function(event) {
-    this.navigate('job/' + event.target.getAttribute('data-id'), {trigger: true});
+    this.state.router.navigate('job/' + event.target.getAttribute('data-id'), {trigger: true});
+    this.refs['query'].getDOMNode().value = event.target.getAttribute('data-id');
+    this.setState({ results: [] });
   },
   render: function () {
     var results = this.state.results.map(function(result) {
@@ -42,7 +44,7 @@ module.exports = React.createClass({
       <div className="right menu">
         <div className="item">
           <div className="ui icon input">
-            <input type="text" onChange={this.handleQuery} defaultValue={this.state.query} placeholder="Search..." />
+            <input type="text" onChange={this.handleQuery} ref="query" defaultValue={this.state.query} placeholder="Search..." />
             <i className="search link icon"></i>
           </div>
           <ul className={!this.state.results.length ? 'dropdown hidden' : 'dropdown'}>{results}</ul>

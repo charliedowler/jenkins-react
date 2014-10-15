@@ -1,4 +1,7 @@
 var React = require('react');
+var Backbone = require('backbone');
+var JobView = require('./JobView');
+var Grid = require('./Grid');
 var JobTable = require('./JobTable');
 var LoginForm = require('./LoginForm');
 var ConfigForm = require('./ConfigForm');
@@ -11,14 +14,12 @@ module.exports = React.createClass({
   routes: {
     'job/:name': 'inspectJob'
   },
-  inspectJob: function(name) {
-    // TODO: Show deeper job info
-  },
   getInitialState: function () {
     return {
       root: null,
       user: null,
-      pass: null
+      pass: null,
+      job: null
     }
   },
   componentWillMount: function () {
@@ -28,6 +29,9 @@ module.exports = React.createClass({
     }
     this.setState({ root: this.props.root, user: user, pass: pass});
   },
+  componentDidMount: function () {
+    Backbone.history.start();
+  },
   render: function () {
 
     var component = !this.state.root ? <ConfigForm onChange={this.handleConfigChange} /> : null;
@@ -35,21 +39,34 @@ module.exports = React.createClass({
     if (this.state.root && !this.state.user && !this.state.pass) {
       component = <LoginForm root={this.state.root} onLoggedIn={this.handleLoggedIn} />;
     }
-    else if (this.state.root && this.state.user && this.state.pass) {
-      component = <div className="ui grid" id="app-grid">
+    else if (this.isValid() && this.state.job) {
+      component = <Grid id="app-grid">
+        <div className="sixteen wide column">
+          <JobView root={this.state.root} job={this.state.job} />
+        </div>
+      </Grid>;
+    }
+    else if (this.isValid()) {
+      component = <Grid id="app-grid">
         <div className="three wide column">
           <BuildQueue root={this.state.root} />
         </div>
         <div className="thirteen wide column">
           <JobTable root={this.state.root} />
         </div>
-      </div>;
+      </Grid>;
     }
 
     return <div id="app">
       <HeaderMenu root={this.state.root} />
     {component}
     </div>;
+  },
+  isValid: function () {
+    return this.state.root && this.state.user && this.state.pass;
+  },
+  inspectJob: function (name) {
+    this.setState({ job: name })
   },
   handleLoggedIn: function (username, password) {
     this.setState({ user: username, pass: password });

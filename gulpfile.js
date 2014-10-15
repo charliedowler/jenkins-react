@@ -17,7 +17,7 @@ gulp.task('main', function () {
 });
 
 gulp.task('view', function () {
-  return handleJSX('assets/view/**.js', 'tmp/assets/view');
+  return handleJSX('assets/view/**/*.js', 'tmp/assets/view');
 });
 
 gulp.task('model', function () {

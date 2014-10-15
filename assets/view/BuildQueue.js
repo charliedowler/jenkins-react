@@ -1,8 +1,9 @@
 var React = require('react');
 var APIMixin = require('../mixin/APIMixin');
+var StateMixin = require('../mixin/StateMixin');
 
 module.exports = React.createClass({
-  mixins: [APIMixin],
+  mixins: [APIMixin, StateMixin],
   getInitialState: function () {
     return {
       jobsInQueue: [],

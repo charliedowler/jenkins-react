@@ -44,6 +44,12 @@ module.exports = function(root) {
       request(uri, function(err, response, body) {
         cb(err, body);
       });
+    },
+    'getLastBuildReport': function(job, cb) {
+      var uri = 'http://localhost:3000/last_build_report?job=' + job;
+      request(uri, function(err, response, body) {
+        cb(err, body);
+      });
     }
   };
 };
