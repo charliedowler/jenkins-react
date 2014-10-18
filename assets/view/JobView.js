@@ -1,6 +1,6 @@
 var React = require('react');
 var APIMixin = require('../mixin/APIMixin');
-var StateMixin = require('../mixin/StateMixin');
+var StateMixin = require('statemixin');
 
 module.exports = React.createClass({
   mixins: [APIMixin, StateMixin],

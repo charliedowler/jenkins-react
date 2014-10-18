@@ -3,7 +3,7 @@ var _ = require('underscore');
 var moment = require('moment');
 var Jobs = require('../collection/Jobs');
 var APIMixin = require('../mixin/APIMixin');
-var StateMixin = require('../mixin/StateMixin');
+var StateMixin = require('statemixin');
 
 module.exports = React.createClass({
   mixins: [APIMixin, StateMixin],

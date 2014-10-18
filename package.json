@@ -22,7 +22,8 @@
     "underscore": "^1.7.0",
     "backbone": "^1.1.2",
     "jquery": "*",
-    "moment": "^2.8.3"
+    "moment": "^2.8.3",
+    "statemixin": "^0.1.0"
   },
   "devDependencies": {
     "gulp": "^3.8.8",

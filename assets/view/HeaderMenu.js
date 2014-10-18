@@ -2,7 +2,7 @@ var _ = require('underscore');
 var React = require('react/addons');
 var Jobs = require('../collection/Jobs');
 var RouterMixin = require('../mixin/RouterMixin');
-var StateMixin = require('../mixin/StateMixin');
+var StateMixin = require('statemixin');
 
 module.exports = React.createClass({
   mixins: [RouterMixin, StateMixin],

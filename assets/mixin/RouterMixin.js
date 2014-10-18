@@ -13,4 +13,4 @@ module.exports = {
     var Router = Backbone.Router.extend(properties);
     this.setState({ router: new Router});
   }
-}
+};
