@@ -8,7 +8,7 @@ Backbone.$ = function() {
   return {
     on: function() {},
     off: function() {}
-  }
+  };
 };
 
 module.exports = {
@@ -20,6 +20,6 @@ module.exports = {
       properties[method] = this[method];
     }, this);
     var Router = Backbone.Router.extend(properties);
-    this.setState({ router: new Router});
+    this.setState({ router: new Router()});
   }
 };

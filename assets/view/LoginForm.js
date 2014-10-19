@@ -6,7 +6,7 @@ var component = React.createClass({
   getInitialState: function() {
     return {
       registrationEnabled: true
-    }
+    };
   },
   componentDidMount: function() {
     this.execute('isRegistrationEnabled', function(err, isEnabled) {
@@ -14,15 +14,15 @@ var component = React.createClass({
     }.bind(this));
   },
   login: function() {
-    var username = this.refs['username'].getDOMNode().value;
-    var password = this.refs['password'].getDOMNode().value;
+    var username = this.refs.username.getDOMNode().value;
+    var password = this.refs.password.getDOMNode().value;
 
     this.execute('login', username, password, function(err, response) {
       if (err) throw new Error(err);
       if (response.statusCode < 300) {
         if (Storage) {
-          localStorage['user'] = username;
-          localStorage['pass'] = password;
+          localStorage.user = username;
+          localStorage.pass = password;
         }
         if (this.props.onLoggedIn) this.props.onLoggedIn(username, password);
       }

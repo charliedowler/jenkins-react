@@ -6,10 +6,10 @@ module.exports = React.createClass({
     return {
       root: null,
       error: null
-    }
+    };
   },
   render: function () {
-    var error = this.state.error
+    var error = this.state.error;
     error = error ? <ErrorMessage problem={error.problem} solution={error.solution} /> : null;
 
     return <div id="config-form">

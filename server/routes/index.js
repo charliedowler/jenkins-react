@@ -19,7 +19,7 @@ router.post('/login', function (req, res) {
   var jenkins = jenkinsapi.init('http://' + user + ':' + pass + '@' + root);
   jenkins.all_jobs(function (err, data) {
     if (err) {
-      res.send(err, 500)
+      res.send(err, 500);
     }
     if (data === true) res.send(401);
     else {
@@ -130,7 +130,7 @@ function getData(req) {
     name: req.session.user.name,
     pass: req.session.user.pass,
     root: req.session.user.root
-  }
+  };
 }
 
 module.exports = router;

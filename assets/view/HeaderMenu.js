@@ -24,13 +24,13 @@ module.exports = React.createClass({
     });
     jobs.fetch({
       error: function (models, response) {
-        self.setState({ problem: response.statusCode })
+        self.setState({ problem: response.statusCode });
       }
     });
   },
   selectJob: function(event) {
     this.state.router.navigate('job/' + event.target.getAttribute('data-id'), {trigger: true});
-    this.refs['query'].getDOMNode().value = event.target.getAttribute('data-id');
+    this.refs.query.getDOMNode().value = event.target.getAttribute('data-id');
     this.setState({ results: [] });
   },
   render: function () {
@@ -78,4 +78,3 @@ module.exports = React.createClass({
     window.location = '/logout';
   }
 });
-

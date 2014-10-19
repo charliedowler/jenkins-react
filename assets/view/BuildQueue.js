@@ -9,7 +9,7 @@ module.exports = React.createClass({
       jobsInQueue: [],
       problem: null,
       solution: null
-    }
+    };
   },
   componentWillMount: function () {
     this.execute('getJobsInQueue', function (err, results) {

@@ -48,7 +48,7 @@ gulp.task('minify-css', function() {
   gulp.src('assets/view/*.css')
     .pipe(concatCSS("App.css"))
     .pipe(minifyCSS({keepBreaks:true}))
-    .pipe(gulp.dest('server/public/stylesheets'))
+    .pipe(gulp.dest('server/public/stylesheets'));
 });
 
 gulp.task('sequence', function() {

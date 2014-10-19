@@ -20,12 +20,14 @@ module.exports = React.createClass({
       user: null,
       pass: null,
       job: null
-    }
+    };
   },
   componentWillMount: function () {
+    var user;
+    var pass;
     if (Storage) {
-      var user = localStorage['user'];
-      var pass = localStorage['pass'];
+      user = localStorage.user;
+      pass = localStorage.pass;
     }
     this.setState({ root: this.props.root, user: user, pass: pass});
   },

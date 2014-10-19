@@ -13,7 +13,7 @@ module.exports = React.createClass({
       jobs: [],
       problem: null,
       solution: null
-    }
+    };
   },
   componentWillMount: function () {
     var self = this;
@@ -26,7 +26,7 @@ module.exports = React.createClass({
       error: function (models, response) {
         self.setState({ error: {
           problem: response.statusCode
-        }})
+        }});
       }
     });
   },
