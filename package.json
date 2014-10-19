@@ -18,12 +18,12 @@
   "license": "ISC",
   "dependencies": {
     "react": "^0.11.2",
+    "moment": "^2.8.3",
+    "backbone": "^1.1.2",
     "request": "^2.45.0",
     "underscore": "^1.7.0",
-    "backbone": "^1.1.2",
-    "jquery": "*",
-    "moment": "^2.8.3",
-    "statemixin": "^0.1.0"
+    "statemixin": "^0.1.0",
+    "backbone.nativeajax": "^0.2.0"
   },
   "devDependencies": {
     "gulp": "^3.8.8",

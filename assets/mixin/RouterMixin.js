@@ -2,6 +2,15 @@ var React = require('react');
 var _ = require('underscore');
 var Backbone = require('backbone');
 
+// Workaround for removing Backbone jQuery dependency
+require('backbone.nativeajax');
+Backbone.$ = function() {
+  return {
+    on: function() {},
+    off: function() {}
+  }
+};
+
 module.exports = {
   componentWillMount: function() {
     var properties = {
