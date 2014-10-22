@@ -76,5 +76,10 @@ module.exports = React.createClass({
       delete localStorage.pass;
     }
     window.location = '/logout';
+  },
+  componentWillReceiveProps: function(nextProps) {
+    if (nextProps.root != this.state.root) {
+      this.setState({ root: nextProps.root });
+    }
   }
 });
