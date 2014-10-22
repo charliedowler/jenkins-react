@@ -60,7 +60,7 @@ module.exports = React.createClass({
         <div className="item">
           <div className="ui icon input">
             {SearchInput()}
-            <i className="search link icon"></i>
+            <i onClick={this.clear} className={this.state.query ? 'remove icon' : 'search link icon'}></i>
           </div>
           <ul className={!this.state.results.length ? 'dropdown hidden' : 'dropdown'}>{results}</ul>
         </div>
@@ -87,6 +87,10 @@ module.exports = React.createClass({
     });
 
     this.setState({ query: query, results: results});
+  },
+  clear: function() {
+    this.refs.query.getDOMNode().value = '';
+    this.setState({ query: null, results: [] });
   },
   logout: function() {
     if (Storage) {

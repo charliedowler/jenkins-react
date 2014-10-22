@@ -29,6 +29,9 @@ ul.dropdown li:hover {
     background-color: rgba(0, 0, 0, .02);
     cursor: pointer;
 }
-.hidden {
+.ui .hidden {
   display: none !important;
+}
+.ui .remove.icon {
+  cursor: pointer !important;
 }
