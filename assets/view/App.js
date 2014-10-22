@@ -12,14 +12,17 @@ var RouterMixin = require('../mixin/RouterMixin');
 module.exports = React.createClass({
   mixins: [RouterMixin],
   routes: {
-    'job/:name': 'inspectJob'
+    '': 'showDefaultView',
+    'job/:name': 'inspectJob',
+    'job/:name/:build': 'inspectBuild'
   },
   getInitialState: function () {
     return {
       root: null,
       user: null,
       pass: null,
-      job: null
+      job: null,
+      build: null
     };
   },
   componentWillMount: function () {
@@ -36,19 +39,21 @@ module.exports = React.createClass({
   },
   render: function () {
 
+    var isValid = this.isValid();
+
     var component = !this.state.root ? <ConfigForm onChange={this.handleConfigChange} /> : null;
 
     if (this.state.root && !this.state.user && !this.state.pass) {
       component = <LoginForm root={this.state.root} onLoggedIn={this.handleLoggedIn} />;
     }
-    else if (this.isValid() && this.state.job) {
+    else if (isValid && this.state.job) {
       component = <Grid id="app-grid">
         <div className="sixteen wide column">
-          <JobView root={this.state.root} job={this.state.job} />
+          <JobView root={this.state.root} job={this.state.job} build={this.state.build} />
         </div>
       </Grid>;
     }
-    else if (this.isValid()) {
+    else if (isValid) {
       component = <Grid id="app-grid">
         <div className="three wide column">
           <BuildQueue root={this.state.root} />
@@ -60,15 +65,21 @@ module.exports = React.createClass({
     }
 
     return <div id="app">
-      <HeaderMenu root={this.state.root} />
+      <HeaderMenu root={this.state.root} auth={isValid} />
     {component}
     </div>;
   },
   isValid: function () {
-    return this.state.root && this.state.user && this.state.pass;
+    return !!(this.state.root && this.state.user && this.state.pass);
+  },
+  showDefaultView: function() {
+    this.setState({ job: null, build: null });
   },
   inspectJob: function (name) {
-    this.setState({ job: name })
+    this.setState({ job: name });
+  },
+  inspectBuild: function (name, build) {
+    this.setState({ job: name,  build: build });
   },
   handleLoggedIn: function (username, password) {
     this.setState({ user: username, pass: password });

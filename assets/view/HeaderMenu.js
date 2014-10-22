@@ -16,6 +16,11 @@ module.exports = React.createClass({
     };
   },
   componentWillMount: function() {
+    if (this.props.auth) {
+      this.fetchJobs();
+    }
+  },
+  fetchJobs: function() {
     var self = this;
     var jobs = new Jobs();
     jobs.root = this.props.root;
@@ -35,25 +40,38 @@ module.exports = React.createClass({
   },
   render: function () {
     var results = this.state.results.map(function(result) {
-      return <li onClick={this.selectJob} data-id={result.get('name')}>{result.get('name')}</li>;
+      var name = result.get('name');
+      return <li key={name} onClick={this.selectJob} data-id={name}>{name}</li>;
     }.bind(this));
+
+    var SearchInput = function() {
+      var field = <input type="text" onChange={this.handleQuery} ref="query" defaultValue={this.state.query} placeholder="Search..." />;
+      if (!this.props.auth) {
+        field.props.disabled = true;
+      }
+      return field;
+    }.bind(this);
+
     return <div className="ui inverted menu">
-      <a className="item" href="/">
+      <a className="item" href="#" onClick={this.reset}>
         <i className="home icon"></i>
       Home </a>
       <div className="right menu">
         <div className="item">
           <div className="ui icon input">
-            <input type="text" onChange={this.handleQuery} ref="query" defaultValue={this.state.query} placeholder="Search..." />
+            {SearchInput()}
             <i className="search link icon"></i>
           </div>
           <ul className={!this.state.results.length ? 'dropdown hidden' : 'dropdown'}>{results}</ul>
         </div>
-        <a className="item" href="#" onClick={this.logout}>
+        <a className={this.props.auth ? 'item' : 'item hidden'} href="#" onClick={this.logout}>
           <i className="sign out icon"></i>
         </a>
       </div>
     </div>;
+  },
+  reset: function() {
+    this.state.router.navigate('/', { trigger: true });
   },
   handleQuery: function(event) {
     var query = event.target.value;
@@ -80,6 +98,9 @@ module.exports = React.createClass({
   componentWillReceiveProps: function(nextProps) {
     if (nextProps.root != this.state.root) {
       this.setState({ root: nextProps.root });
+    }
+    if (nextProps.auth && nextProps.auth != this.props.auth) {
+      this.fetchJobs();
     }
   }
 });
