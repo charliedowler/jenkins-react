@@ -15,7 +15,13 @@ module.exports = React.createClass({
     this.setBuildReport(this.props.job);
   },
   render: function() {
-    return <div> {this.generateTitle()} </div>;
+    return <div> {this.generateTitle()} <a href="#" onClick={this.triggerBuild}>Trigger build</a></div>;
+  },
+  triggerBuild: function(e) {
+    e.preventDefault();
+    this.execute('build', this.state.job, function() {
+
+    }.bind(this));
   },
   setBuildReport: function(job) {
     this.execute('getLastBuildReport', job, function(err, res) {
@@ -44,7 +50,7 @@ module.exports = React.createClass({
         status = <b>aborted</b>;
         break;
       default:
-        status = <b>...</b>;
+        status = <b>building...</b>;
     }
     return <h1>
       {this.state.job} is {status}

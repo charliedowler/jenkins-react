@@ -50,6 +50,12 @@ module.exports = function(root) {
       request(uri, function(err, response, body) {
         cb(err, body);
       });
+    },
+    'build': function(job, cb) {
+      var uri = 'http://localhost:3000/build?job=' + job;
+      request(uri, function(err, response, body) {
+        cb(err, body);
+      });
     }
   };
 };
