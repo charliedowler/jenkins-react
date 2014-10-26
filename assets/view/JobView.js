@@ -13,7 +13,7 @@ module.exports = React.createClass({
     };
   },
   ticker: function() {
-    if (this.ticks > 20) {
+    if (this.ticks > 50) {
       this.clearInterval();
       return false;
     }
