@@ -2,6 +2,7 @@ var React = require('react');
 var APIMixin = require('../mixin/APIMixin');
 var TimerMixin = require('../mixin/TimerMixin');
 var StateMixin = require('statemixin');
+var Grid = require('./Grid');
 
 module.exports = React.createClass({
   mixins: [APIMixin, StateMixin, TimerMixin],
@@ -26,7 +27,11 @@ module.exports = React.createClass({
     this.setBuildReport(this.props.job);
   },
   render: function() {
-    return <div> {this.generateTitle()} </div>;
+    return <Grid id="app-grid">
+      <div className="sixteen wide column">
+        <div> {this.generateTitle()} </div>
+      </div>
+    </Grid>;
   },
   triggerBuild: function(e) {
     e.preventDefault();

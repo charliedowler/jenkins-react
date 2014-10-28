@@ -10,16 +10,16 @@ module.exports = React.createClass({
   debounce: 1000,
   getInitialState: function () {
     return {
-      jobs: [],
+      jobs: new Jobs(),
       problem: null,
       solution: null
     };
   },
   componentWillMount: function () {
     var self = this;
-    var jobs = new Jobs();
+    var jobs = this.state.jobs;
     jobs.root = this.props.root;
-    jobs.on('all', function () {
+    jobs.on('add remove change', function () {
       self.setState({ jobs: jobs });
     });
     jobs.fetch({
@@ -29,6 +29,9 @@ module.exports = React.createClass({
         }});
       }
     });
+  },
+  componentWillUnmount: function() {
+    this.state.jobs.off(null, null);
   },
   render: function () {
     var noPassing = 0;

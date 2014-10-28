@@ -8,6 +8,7 @@ var ConfigForm = require('./ConfigForm');
 var HeaderMenu = require('./HeaderMenu');
 var BuildQueue = require('./BuildQueue');
 var RouterMixin = require('../mixin/RouterMixin');
+var DefaultView = require('./DefaultView');
 
 module.exports = React.createClass({
   mixins: [RouterMixin],
@@ -38,7 +39,6 @@ module.exports = React.createClass({
     Backbone.history.start();
   },
   render: function () {
-
     var isValid = this.isValid();
 
     var component = !this.state.root ? <ConfigForm onChange={this.handleConfigChange} /> : null;
@@ -47,21 +47,10 @@ module.exports = React.createClass({
       component = <LoginForm root={this.state.root} onLoggedIn={this.handleLoggedIn} />;
     }
     else if (isValid && this.state.job) {
-      component = <Grid id="app-grid">
-        <div className="sixteen wide column">
-          <JobView root={this.state.root} job={this.state.job} build={this.state.build} />
-        </div>
-      </Grid>;
+      component = <JobView root={this.state.root} job={this.state.job} build={this.state.build} />;
     }
     else if (isValid) {
-      component = <Grid id="app-grid">
-        <div className="three wide column">
-          <BuildQueue root={this.state.root} />
-        </div>
-        <div className="thirteen wide column">
-          <JobTable root={this.state.root} />
-        </div>
-      </Grid>;
+      component = <DefaultView root={this.state.root} />;
     }
 
     return <div id="app">
