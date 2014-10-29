@@ -1,12 +1,13 @@
 var React = require('react');
 var _ = require('underscore');
 var moment = require('moment');
+var Bus = require('../bus');
 var Jobs = require('../collection/Jobs');
 var APIMixin = require('../mixin/APIMixin');
-var StateMixin = require('statemixin');
+var LifeCycleMixin = require('../mixin/LifeCycleMixin');
 
 module.exports = React.createClass({
-  mixins: [APIMixin, StateMixin],
+  mixins: [APIMixin, LifeCycleMixin],
   debounce: 1000,
   getInitialState: function () {
     return {
@@ -24,9 +25,11 @@ module.exports = React.createClass({
     });
     jobs.fetch({
       error: function (models, response) {
-        self.setState({ error: {
-          problem: response.statusCode
-        }});
+        if (response.statusText != 'abort') {
+          self.setState({ error: {
+            problem: response.statusCode
+          }});
+        }
       }
     });
   },
@@ -43,7 +46,7 @@ module.exports = React.createClass({
       var lastFailedBuild = job.get('lastFailedBuild') || {};
       var lastSuccessfulBuild = job.get('lastSuccessfulBuild') || {};
       if (!job.get('healthReport')) {
-        return <tr>
+        return <tr key={Math.random() * 200 + 'loading'}>
           <td>Loading...</td>
           <td></td>
           <td></td>
@@ -89,7 +92,7 @@ module.exports = React.createClass({
       var healthReport = job.get('healthReport')[0];
       // TODO: Show tooltip on healthReport icon => healthReport.description
       // TODO: lastBuild.duration seems to be be different every time, wtf...
-      return <tr>
+      return <tr key={job.get('name')}>
         {buildStatus}
         <td>
           <img src={"/images/" + healthReport.iconUrl}/>

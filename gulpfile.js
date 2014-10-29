@@ -13,7 +13,7 @@ var reactDomPragma = require('react-dom-pragma');
 gulp.task('default', ['main', 'view', 'mixin', 'model', 'collection', 'browserify', 'minify-css', 'watch']);
 
 gulp.task('main', function () {
-  return handleJSX(['assets/main.js', 'assets/api.js'], 'tmp/assets');
+  return handleJSX(['assets/main.js', 'assets/api.js', 'assets/bus.js'], 'tmp/assets');
 });
 
 gulp.task('view', function () {

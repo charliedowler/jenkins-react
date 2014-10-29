@@ -5,7 +5,7 @@ var RouterMixin = require('../mixin/RouterMixin');
 var StateMixin = require('statemixin');
 
 module.exports = React.createClass({
-  mixins: [RouterMixin, StateMixin],
+  mixins: [RouterMixin],
   debounce: 1000,
   getInitialState: function() {
     return {
