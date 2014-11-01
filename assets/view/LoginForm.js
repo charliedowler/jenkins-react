@@ -24,7 +24,7 @@ var component = React.createClass({
           localStorage.user = username;
           localStorage.pass = password;
         }
-        if (this.props.onLoggedIn) this.props.onLoggedIn(username, password);
+        this.props.onLoggedIn && this.props.onLoggedIn(username, password);
       }
     }.bind(this));
   },

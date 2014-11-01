@@ -4,10 +4,10 @@ var moment = require('moment');
 var Bus = require('../bus');
 var Jobs = require('../collection/Jobs');
 var APIMixin = require('../mixin/APIMixin');
-var LifeCycleMixin = require('../mixin/LifeCycleMixin');
+var lifecyclemixin = require('lifecyclemixin');
 
 module.exports = React.createClass({
-  mixins: [APIMixin, LifeCycleMixin],
+  mixins: [APIMixin, lifecyclemixin],
   debounce: 1000,
   getInitialState: function () {
     return {

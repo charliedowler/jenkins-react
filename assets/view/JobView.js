@@ -5,7 +5,7 @@ var StateMixin = require('statemixin');
 var Grid = require('./Grid');
 
 module.exports = React.createClass({
-  mixins: [APIMixin, StateMixin, TimerMixin],
+  mixins: [APIMixin, TimerMixin],
   getInitialState: function() {
     return {
       job: null,
@@ -25,6 +25,9 @@ module.exports = React.createClass({
   },
   componentWillMount: function() {
     this.setBuildReport(this.props.job);
+  },
+  componentWillUnmount: function() {
+    this.abort();
   },
   render: function() {
     return <Grid id="app-grid">
