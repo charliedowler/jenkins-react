@@ -41,8 +41,7 @@ module.exports = React.createClass({
   render: function () {
     var isValid = this.isValid();
 
-    var component = this.state.root 
-      && <ConfigForm onChange={this.handleConfigChange} />;
+    var component = <ConfigForm onChange={this.handleConfigChange} />;
 
     if (this.state.root && !this.state.user && !this.state.pass) {
       component = <LoginForm root={this.state.root} onLoggedIn={this.handleLoggedIn} />;
