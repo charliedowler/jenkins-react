@@ -9,31 +9,29 @@ module.exports = Backbone.Model.extend({
   },
   initialize: function () {
     FetchMixin.call(this);
-    this.fetch();
-    this.on('change:lastSuccessfulBuild', _.once(this.getLastSuccessfulBuild), this);
-    this.on('change:lastFailedBuild', _.once(this.getLastFailedBuild), this);
-    this.on('change:lastBuild', _.once(this.getLastBuild), this);
+    this.fetch({
+      success: this.handleFetch.bind(this)
+    });
   },
-  getLastBuild: function() {
-    if (!this.get('lastBuild')) return false;
-    api(this.root).buildInfo(this.get('name'), this.get('lastBuild').number, function(err, info) {
-      this.set({lastBuild: JSON.parse(info)});
-    }.bind(this));
-  },
-  getLastSuccessfulBuild: function() {
-    if (!this.get('lastSuccessfulBuild')) return false;
-    api(this.root).buildInfo(this.get('name'), this.get('lastSuccessfulBuild').number, function(err, info) {
-      this.set({lastSuccessfulBuild: JSON.parse(info)});
-    }.bind(this));
-  },
-  getLastFailedBuild: function() {
-    if (!this.get('lastFailedBuild')) return false;
-    api(this.root).buildInfo(this.get('name'), this.get('lastFailedBuild').number, function(err, info) {
-      this.set({lastFailedBuild: JSON.parse(info)});
-    }.bind(this));
+  handleFetch: function(attrs) {
+    var self = this;
+    var parsed = attrs.toJSON();
+    var name = self.get('name');
+    var recents = ['lastBuild', 'lastSuccessfulBuild', 'lastFailedBuild'];
+
+    recents.forEach(function(recent) {
+      var number = parsed[recent] && parsed[recent].number;
+      if (!number) return false;
+      api(self.collection.root).buildInfo(name, number, function(err, info) {
+        var toSet = {};
+        toSet[recent] = JSON.parse(info);
+        self.set(toSet);
+      });
+
+    });
   },
   abort: function() {
-    this.fetched.abort();    
+    this.fetched.abort();
     api.abort();
   }
 });

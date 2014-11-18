@@ -9,8 +9,9 @@ module.exports = React.createClass({
     };
   },
   render: function () {
-    var error = this.state.error;
-    error = error ? <ErrorMessage problem={error.problem} solution={error.solution} /> : null;
+    var error = this.state.error && <ErrorMessage
+      problem={this.state.error.problem}
+      solution={this.state.error.solution} />;
 
     return <div id="config-form">
       <div className="ui one column grid">
@@ -29,11 +30,12 @@ module.exports = React.createClass({
     </div>;
   },
   validate: function () {
-    var matcher = /^\w+:\/\/([^\s\.]+\.\S{2}|localhost[\:?\d]*)\S*$/;
-    return true || matcher.test(this.refs['root'].getDOMNode().value);
+    return /([0-9]|:|\.)/.test(this.refs['root'].getDOMNode().value);
   },
   componentDidUpdate: function () {
-    if (this.props.onChange && this.state.root) this.props.onChange({ root: this.state.root });
+    if (this.props.onChange && this.state.root) {
+      this.props.onChange({ root: this.state.root });
+    }
   },
   save: function () {
     if (this.validate()) {
